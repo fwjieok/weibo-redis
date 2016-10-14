@@ -1,0 +1,8 @@
+<div id="header">
+  <a href="/"><img style="border:none" src="/images/logo.png" width="192" height="85" alt="Retwis"></a>
+  <div id="navbar">
+     <a href="/api/home">主页</a>
+     | <a href="/api/timeline">热点</a>
+     | <a href="/api/logout">退出</a>
+  </div>
+</div>

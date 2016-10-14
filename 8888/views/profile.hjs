@@ -1,0 +1,25 @@
+
+<!DOCTYPE html >
+<html lang="it">
+  {{> header.hjs}}
+  <body>
+    <div id="page">
+      {{> navbar.hjs}}
+      <h2 class="username">{{username}}</h2>
+      <a href="/api/follow?uid={{userid}}&f={{followed}}" class="button">
+	关注ta
+	取消关注ta
+      </a>
+
+      {{#posts}}
+      <div class="post">
+	<a class="username" href="/api/profile?u={{username}}">{{username}}</a>
+	{{content}}
+	<br>
+	<i>发布时间: {{time}}</i>
+      </div>
+      {{/posts}}
+      {{> footer.hjs}}
+    </div>
+  </body>
+</html>

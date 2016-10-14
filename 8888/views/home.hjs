@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="it">
+  {{> header.hjs}}
+  <body>
+    <div id="page">
+      {{> navbar.hjs}}
+      <div id="postform">
+	<form id="form_post" method="POST" action="/api/publish">
+	  {{username}}, 有啥感想?
+	  <br>
+	  <table>
+	    <tr><td><textarea cols="70" rows="3" name="status"></textarea></td></tr>
+	    <tr><td align="right"><input type="submit" name="doit" value="Update"></td></tr>
+	  </table>
+	</form>
+	<div id="homeinfobox">
+	  0 粉丝<br>
+	  0 关注<br>
+	</div>
+      </div>
+      {{#posts}}
+      <div class="post">
+	<a class="username" href="/api/profile?u={{username}}">{{username}}</a>
+	{{content}}
+	<br>
+	<i>发布时间: {{time}}</i>
+      </div>
+      {{/posts}}
+      {{> footer.hjs}}
+    </div>
+  </body>
+</html>

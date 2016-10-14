@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <script language="JavaScript" type="text/javascript">
+     window.location.href="http://localhost:8888/api/index"; 
+    </script>
+  </head>
+</html>

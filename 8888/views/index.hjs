@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="it">
+  {{> header.hjs}}
+  <body>
+    <div id="page">
+      {{> navbar.hjs}}
+      <div id="welcomebox">
+	<div id="registerbox">
+	  <h2>注册!</h2>
+	  <b>想试试Retwis? 请注册账号!</b>
+	  <form id="form_register" method="POST" action="/api/register">
+	    <table>
+	      <tr>
+		<td>用户名</td><td><input type="text" name="username"></td>
+		<td><span id="username-error"></span></td>
+	      <tr>
+		<td>密码</td><td><input type="password" name="password"></td>
+		<td><span id="password-error"></span></td>
+	      </tr>
+	      <tr>
+		<td>密码(again)</td><td><input type="password" name="password2"></td>
+		<td><span id="password2-error"></span></td>
+	      </tr>
+	      <tr>
+		<td colspan="2" align="right"><input type="button" id="register" value="注册"></td>	
+	      </tr>
+	    </table>
+	  </form>
+	  <h2>已经注册了? 请直接登陆</h2>
+	  <form id="form_login" method="POST" action="/api/login">
+	    <table>
+	      <tr>
+		<td>用户名</td><td><input type="text" name="username"></td>
+	      </tr>
+	      <tr>
+		<td>密码:</td><td><input type="password" name="password"></td>
+	      </tr>
+	      <tr>
+		<td colspan="2" align="right"><input type="submit" name="doit" value="Login"></td>
+	      </tr>
+	    </table>
+	  </form>
+	</div>
+	介绍! Retwis  是一个简单的<a href="http://twitter.com">Twitter</a>克隆, 也是<a href="http://code.google.com/p/redis/">Redis</a> key-value 数据库的一个使用安全. 关键点:
+	<ul>
+	  <li>Redis 是一种key-value 数据库, 而且是本项目中 <b>唯一</b>使用的数据库, 没有用mysql等.</li>
+	  <li>应用程序可以通过一致性哈希轻易的部署多台服务器</li>
+	  <li>node.js与redis服务器的连接用<a href="pecl.php.net/package/redis">ioredis</a>
+	</ul>
+      </div>
+      {{> footer.hjs}}
+    </div>
+  </body>
+
+  <script type="text/javascript">
+
+    $("#register").click(function () {
+    var $username = $("input[name=username]");
+    var $password = $("input[name=password]");
+    var $password2= $("input[name=password2]");
+
+    var $username_err = $("#username-error");
+    var $password_err = $("#password-error");
+    var $password2_err= $("#password2-error");
+
+    var username = $.trim($username.val());
+    var password = $.trim($password.val());
+    var password2= $.trim($password2.val());
+
+    if ('' === username) {
+    $username_err.text("用户名不能为空");
+    $username.focus();
+    return;
+    }
+
+    if ('' === password) {
+    $password_err.text("密码不能为空");
+    $password.focus();
+    return;
+    }
+
+    if ('' === password2) {
+    $password2_err.text("确认密码不能为空");
+    $password2.focus();
+    return;
+    }
+
+    if (password != password2) {
+    $password2_err.text("两次密码输入不一致");
+    $password2.focus();
+    return;
+    }
+
+
+    $("#form_register").submit();
+    });
+
+  </script>
+</html>

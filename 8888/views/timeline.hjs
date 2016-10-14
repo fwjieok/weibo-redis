@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html lang="it">
+  {{> header.hjs}}
+  <body>
+    <div id="page">
+      {{> navbar.hjs}}
+      <h2>热点</h2>
+      <i>最新注册用户(redis中的sort用法)</i><br>
+      <br>
+      {{#lastest_users}}
+      <a class="username" href="/api/profile?u={{username}}">{{username}}</a>
+      {{/lastest_users}}
+      <br>
+      <br><i>最新的50条微博!</i><br>
+      <div class="post">
+	<a class="username" href="profile.php?u=test">test</a>
+	world<br>
+	<i>22 分钟前 通过 web发布</i>
+      </div>
+
+      <div class="post">
+	<a class="username" href="profile.php?u=test">test</a>
+	hello<br>
+	<i>22 分钟前 通过 web发布</i>
+      </div>
+      {{> footer.hjs}}
+    </div>
+  </body>
+</html>

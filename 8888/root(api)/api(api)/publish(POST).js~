@@ -1,0 +1,59 @@
+
+function on_get_userinfo(user_id) {
+    //用户未登录
+    if (user_id == null) {
+	this.res.redirect("/");
+    }
+
+    this.userid = user_id;
+    var key = "user:userid:" + user_id + ":username";
+    this.redis.get(key).then(on_get_new_postid.bind(this));
+}
+
+function on_get_new_postid(username) {
+    this.username = username;
+    this.redis.incr("global:postid").then(on_publish_a_message.bind(this));
+}
+
+function on_publish_a_message(post_id) {	
+
+    if (post_id == null) {
+	this.res.end("服务器错误");
+    }
+
+    var key1 = "post:postid:" + post_id + ":userid";
+    var key2 = "post:postid:" + post_id + ":username";
+    var key3 = "post:postid:" + post_id + ":content";
+    var key4 = "post:postid:" + post_id + ":time";
+
+    var now = (new Date()).toString();
+    
+    this.redis.mset(key1, this.userid,
+		    key2, this.username,
+		    key3, this.content,
+		    key4, now);
+
+    //存储用户发布的post id
+    var key_userid = "userid:" + this.userid + ":postid";
+    this.redis.lpush(key_userid, post_id);
+
+    this.res.redirect("home?u=" + this.username);
+}
+
+
+module.exports = function (req, res) {
+    var content = req.body.status;		//发表的内容
+
+    var rec = {
+	req : req,
+	res : res,
+	userid : "",
+	username : "",
+	content : content,
+	redis : req.jw.db.redis
+    }
+
+    //根据cookie查询是否登录
+    var key_auth  = "auth:" + req.cookies.auth;
+    req.jw.db.redis.get(key_auth).then(on_get_userinfo.bind(rec));
+}
